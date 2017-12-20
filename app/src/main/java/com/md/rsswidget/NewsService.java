@@ -35,9 +35,9 @@ public class NewsService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        descriptions = new ArrayList<String>();
-        links = new ArrayList<String>();
-        titles = new ArrayList<String>();
+        descriptions = new ArrayList<>();
+        links = new ArrayList<>();
+        titles = new ArrayList<>();
 
         this.intent = intent;
 
@@ -92,17 +92,10 @@ public class NewsService extends Service {
                 factory.setNamespaceAware(false);
                 XmlPullParser xpp = factory.newPullParser();
 
-                // We will get the XML from an input stream
+
                 xpp.setInput(getInputStream(url), "UTF_8");
 
-			        /* We will parse the XML content looking for the "<title>" tag which appears inside the "<item>" tag.
-			         * However, we should take in consideration that the rss feed name also is enclosed in a "<title>" tag.
-			         * As we know, every feed begins with these lines: "<channel><title>Feed_Name</title>...."
-			         * so we should skip the "<title>" tag which is a child of "<channel>" tag,
-			         * and take in consideration only "<title>" tag which is a child of "<item>"
-			         *
-			         * In order to achieve this, we will make use of a boolean variable.
-			         */
+
                 boolean insideItem = false;
 
                 // Returns the type of current event: START_TAG, END_TAG, etc..
@@ -127,7 +120,7 @@ public class NewsService extends Service {
                         insideItem=false;
                     }
 
-                    eventType = xpp.next(); //move to next element
+                    eventType = xpp.next();
                 }
 
             } catch (MalformedURLException e) {
